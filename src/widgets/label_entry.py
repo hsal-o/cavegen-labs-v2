@@ -1,16 +1,26 @@
 import tkinter as tk
+from tkinter import ttk
 
 class LabelEntry(tk.Frame):
-    def __init__(self, parent, label_text="", entry_value=""):
+    def __init__(self, parent, label="", default=""):
         super().__init__(parent)
+
+        self.widget_width = 14
         
-        self.label = tk.Label(self, text=label_text)
-        self.entry = tk.Entry(self)
+        # Configure grid columns to have equal weight
+        self.grid_columnconfigure(0, weight=1, uniform="1")
+        self.grid_columnconfigure(1, weight=1, uniform="1")
         
-        self.label.pack(side="left", fill="both", expand=True)
-        self.entry.pack(side="right", fill="both", expand=True)
+        # Create and place the label
+        self.label = tk.Label(self, text=label, wraplength=self.widget_width*7, anchor="w", justify="left")
+        self.label.grid(row=0, column=0, sticky="w")
         
-        self.entry.insert(0, entry_value)
+        # Create and place the entry
+        self.entry = ttk.Entry(self, width=self.widget_width)
+        self.entry.grid(row=0, column=1, sticky="ew")
+        
+        # Set initial value
+        self.entry.insert(0, default)
         
     def get(self):
         return self.entry.get()

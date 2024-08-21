@@ -1,9 +1,19 @@
-class BaseController:
-    def __init__(self, model, view):
+from services.view_service import ViewService
+
+class BaseController(ViewService):
+    def __init__(self, model, view, algo_name):
         self.model = model
         self.view = view
+        self.algo_name = " ".join(word.capitalize() for word in algo_name.split("_"))
 
-    def set_parameters(self, parameters):
-        self.model.set_parameters(parameters)
-        output = self.model.generate()
-        # Handle output and putting it into output frame
+    def get_algo_name(self):
+        return self.algo_name
+
+    def get_result(self, grid_config_settings):
+        # Grab algorithm parameters
+        algo_config_settings = self.get_settings()
+
+        # Generate grid
+        grid = self.model.generate(grid_config_settings, algo_config_settings)
+        
+        return grid

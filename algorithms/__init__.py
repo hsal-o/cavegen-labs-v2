@@ -18,7 +18,6 @@ def load_algorithms():
 # Load algorithms and expose them
 algorithms = load_algorithms()
 
-print("algorithms: ", algorithms)
+# print("algorithms: ", algorithms)
 
-# Optionally, you can expose specific algorithms or classes here
-__all__ = list(algorithms.keys())
+# __all__ = list(algorithms.keys())

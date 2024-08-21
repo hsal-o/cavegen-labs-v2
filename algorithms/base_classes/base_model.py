@@ -5,5 +5,5 @@ class BaseModel:
     def set_parameters(self, parameters):
         self.parameters = parameters
 
-    def generate(self):
+    def generate(self, grid_config_settings, algo_config_settings):
         raise NotImplementedError("Method not implemented")
