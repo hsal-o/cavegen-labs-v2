@@ -5,8 +5,8 @@ from widgets.label_entry import LabelEntry
 from widgets.widget_config import WidgetConfig
 
 class RandomWalkView(BaseView):
-    def __init__(self, parent, controller):
-        super().__init__(parent, controller, "Random Walk")
+    def __init__(self, parent):
+        super().__init__(parent, "Random Walk")
 
     def create_widgets(self):
         self.widget_configs = {

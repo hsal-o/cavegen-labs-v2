@@ -5,6 +5,9 @@ from algorithms.base_classes.base_model import BaseModel
 class RandomWalkModel(BaseModel):
     def generate(self, grid_config_settings, algo_config_settings):
         # return grid_config_settings, algo_config_settings
+        # seed = grid_config_settings["seed"]
+        # random.seed(grid_config_settings["seed"])
+        # print(f"model.generate() -> seed: '{seed}'")
 
         self.width = grid_config_settings["width"]
         self.height = grid_config_settings["height"]

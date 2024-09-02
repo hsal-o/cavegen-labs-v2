@@ -28,9 +28,9 @@ class AlgorithmManager:
         controller_class = self.cached_controllers[algo_name]
 
         algo_model = model_class()
-        algo_view = view_class(self.parent, None)
+        algo_view = view_class(self.parent)
         algo_controller = controller_class(algo_model, algo_view, algo_name)
-        algo_view.controller = algo_controller
+        algo_view.set_controller(algo_controller)
 
         return algo_view, algo_controller
     

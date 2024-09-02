@@ -2,10 +2,11 @@ import tkinter as tk
 from tkinter import messagebox
 from PIL import Image
 import numpy as np
+import random
 
 from services.grid_configuration_service import GridConfigurationService
 from services.render_service import RenderService
-from views.algorithm_manager import AlgorithmManager
+from services.algorithm_manager import AlgorithmManager
 from views.app_view import AppView
 
 class AppController:
@@ -45,6 +46,8 @@ class AppController:
         if(self.algo_controller == None):
             messagebox.showerror("Error", "Select an Algorithm")
             return
+        
+        self.handle_seed()
 
         # Grab configuration parameters
         grid_config_settings = self.grid_config_service.get_settings()
@@ -55,6 +58,13 @@ class AppController:
         # Render the grid
         self.render_service.render(result, self.algo_controller.get_algo_name())        
 
+    def generate_seed(self):
+        return random.randint(0, 2**32 - 1)
+    
+    def handle_seed(self):
+        seed = self.grid_config_service.get_seed_entry() or self.generate_seed()
+        random.seed(seed)
+        self.grid_config_service.set_seed_entry(seed)
 
     def load_algorithm(self, algo_name):
         algo_view, self.algo_controller = self.algo_manager.load_algorithm(algo_name)

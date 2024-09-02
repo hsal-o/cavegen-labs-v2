@@ -44,8 +44,16 @@ class CheckboxEntry(tk.Frame):
     
     # Set entry value
     def set(self, value):
+        # If entry is disabled, temporily enable it
+        if(not self.is_active()):
+             self.entry.config(state="normal")
+
         self.entry.delete(0, tk.END)
         self.entry.insert(0, value)
+
+        # If entry was originally disabled, disable it again
+        if(not self.is_active()):
+             self.entry.config(state="readonly")
 
     # Set checkbox value
     def set_active(self, value):

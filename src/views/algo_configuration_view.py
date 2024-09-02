@@ -15,7 +15,7 @@ class AlgoConfigurationView(tk.Frame):
 
     def create_placeholder_view(self):
         placeholder_frame = tk.Frame(self)
-        label = tk.Label(placeholder_frame, text="Select an Algorithm", padx=12, pady=12, relief=tk.SUNKEN, borderwidth=2)
+        label = tk.Label(placeholder_frame, text="Select an Algorithm", padx=12, pady=12, relief=tk.GROOVE, borderwidth=2)
         label.pack(fill=tk.BOTH, expand=True)
         return placeholder_frame
     

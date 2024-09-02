@@ -91,20 +91,9 @@ class AppView(tk.Tk):
         self.generate_button = tk.Button(input_frame, text="GENERATE", command=self.controller.handle_generate_button, bg="#D6DBDF", height=2)
         self.generate_button.pack(fill=tk.BOTH, pady=(12,0))
 
-    def _build_input_frame(self, input_frame):
-        self.grid_configuration_view = GridConfigurationView(input_frame)
-        self.grid_configuration_view.pack(fill=tk.BOTH, expand=True)
-
-        self.algo_configuration_container = AlgoConfigurationView(input_frame)
-        self.algo_configuration_container.pack(fill=tk.BOTH, expand=True, pady=(12,0))
-
-        self.generate_button = tk.Button(input_frame, text="GENERATE", command=self.controller.handle_generate_button, bg="#D6DBDF", height=2)
-        self.generate_button.pack(fill=tk.BOTH, expand=True, pady=(12,0))
-
     def build_output_frame(self, output_frame):
         self.render_view = RenderView(output_frame)
         self.render_view.pack(fill=tk.BOTH, expand=True)
-
 
     def get_algo_configuration_container(self):
         return self.algo_configuration_container

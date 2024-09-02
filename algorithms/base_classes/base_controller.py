@@ -1,6 +1,6 @@
-from services.view_service import ViewService
+from controllers.label_frame_controller import LabelFrameController
 
-class BaseController(ViewService):
+class BaseController(LabelFrameController):
     def __init__(self, model, view, algo_name):
         self.model = model
         self.view = view
