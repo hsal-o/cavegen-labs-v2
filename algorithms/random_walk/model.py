@@ -1,46 +1,36 @@
 import random
 from math import ceil, floor
 from algorithms.base_classes.base_model import BaseModel
+from util.constants import StartPosition
 
 class RandomWalkModel(BaseModel):
     def generate(self, grid_config_settings, algo_config_settings):
-        # return grid_config_settings, algo_config_settings
-        # seed = grid_config_settings["seed"]
-        # random.seed(grid_config_settings["seed"])
-        # print(f"model.generate() -> seed: '{seed}'")
-
         self.width = grid_config_settings["width"]
         self.height = grid_config_settings["height"]
         self.grid = [[1 for _ in range(self.width)] for _ in range(self.height)]
 
         for _ in range(algo_config_settings["walker_count"]):
-            if(algo_config_settings["random_start"]):
-                start_x = random.randint(0, grid_config_settings["width"]-1)
-                start_y = random.randint(0, grid_config_settings["height"]-1)
-            else:
-                start_x, start_y = algo_config_settings["start_coords"]
-
-            self.generate_steps(algo_config_settings["step_count"], algo_config_settings["stroke_thickness"], start_x, start_y)
-
+            start_x, start_y = StartPosition.determine(self.width, self.height, algo_config_settings["start_position"])
+            self.generate_steps(algo_config_settings["step_count"], algo_config_settings["thickness"], start_x, start_y)
 
         return self.grid
 
-    def paint_step(self, stroke_thickness, x, y):
-        x_tt = ceil(stroke_thickness / 2)
-        x_bt = floor(stroke_thickness / 2)
+    def paint_step(self, thickness, x, y):
+        x_tt = ceil(thickness / 2)
+        x_bt = floor(thickness / 2)
 
-        y_tt = ceil(stroke_thickness / 2)
-        y_bt = floor(stroke_thickness / 2)
+        y_tt = ceil(thickness / 2)
+        y_bt = floor(thickness / 2)
 
         for _x in range(x - x_tt, x + x_bt):
             for _y in range(y - y_tt, y + y_bt):
                 if(_x >= 0 and _x < self.width and _y >= 0 and _y < self.height):
                     self.grid[_y][_x] = 0
 
-    def generate_steps(self, steps, stroke_thickness, start_x, start_y):
+    def generate_steps(self, steps, thickness, start_x, start_y):
         curr_x = start_x
         curr_y = start_y
-        self.paint_step(stroke_thickness, curr_x, curr_y)
+        self.paint_step(thickness, curr_x, curr_y)
         for _ in range(0, steps-1):
             prev_x = curr_x
             prev_y = curr_y
@@ -65,7 +55,7 @@ class RandomWalkModel(BaseModel):
             if(curr_x == prev_x and curr_y == prev_y):
                 continue
 
-            self.paint_step(stroke_thickness, curr_x, curr_y)
+            self.paint_step(thickness, curr_x, curr_y)
 
 
         

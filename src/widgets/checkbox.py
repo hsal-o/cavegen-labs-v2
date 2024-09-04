@@ -1,6 +1,7 @@
 import tkinter as tk
+from tkinter import ttk
 
-class Checkbox(tk.Checkbutton):
+class Checkbox(ttk.Checkbutton):
     def __init__(self, parent, label="", default=False):
         self.var = tk.BooleanVar()
         self.var.set(default)
