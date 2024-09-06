@@ -1,6 +1,5 @@
 import random
 
-
 class StartPosition:
     RANDOM =        0
     TOP_LEFT =      1
@@ -19,37 +18,37 @@ class StartPosition:
         
         match position:
             case StartPosition.TOP_LEFT:
-                start_x = 0
-                start_y = 0
+                start_x = 1
+                start_y = 1
             case StartPosition.TOP_CENTER:
-                start_x = width // 2
-                start_y = 0
+                start_x = round(width / 2)
+                start_y = 1
             case StartPosition.TOP_RIGHT:
-                start_x = width-1
-                start_y = 0
+                start_x = width
+                start_y = 1
 
             case StartPosition.CENTER_LEFT:
-                start_x = 0
-                start_y = height // 2
+                start_x = 1
+                start_y = round(height / 2)
             case StartPosition.CENTER:
-                start_x = width // 2
-                start_y = height // 2
+                start_x = round(width / 2)
+                start_y = round(height / 2)
             case StartPosition.CENTER_RIGHT:
-                start_x = width-1
-                start_y = height // 2
+                start_x = width
+                start_y = round(height / 2)
 
             case StartPosition.BOTTOM_LEFT:
-                start_x = 0
-                start_y = height-1
+                start_x = 1
+                start_y = height
             case StartPosition.BOTTOM_CENTER:
-                start_x = width // 2
-                start_y = height-1
+                start_x = round(width / 2)
+                start_y = height
             case StartPosition.BOTTOM_RIGHT:
-                start_x = width-1
-                start_y = height-1
+                start_x = width
+                start_y = height
 
             case StartPosition.RANDOM:
-                start_x = random.randint(0, width-1)
-                start_y = random.randint(0, height-1)
+                start_x = random.randint(1, width)
+                start_y = random.randint(1, height)
         
         return start_x, start_y
