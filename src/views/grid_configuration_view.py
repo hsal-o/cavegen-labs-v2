@@ -1,6 +1,6 @@
 from tkinter import messagebox
 from views.label_frame_view import LabelFrameView
-from widgets.widget_config import WidgetConfig
+from widgets.util.widget_config import WidgetConfig
 from widgets.label_entry import LabelEntry
 from widgets.checkbox_entry import CheckboxEntry
 
@@ -12,7 +12,7 @@ class GridConfigurationView(LabelFrameView):
         self.widget_configs = {
             "width": WidgetConfig(LabelEntry, label="Width:", default=32, type=int),
             "height": WidgetConfig(LabelEntry, label="Height:", default=32, type=int),
-            "seed": WidgetConfig(CheckboxEntry, label="Set Seed?", default=("", False), type=str)
+            "seed": WidgetConfig(CheckboxEntry, label="Set Seed?", default=("", False), type=int)
         }
 
     def get_width_entry(self):
@@ -27,7 +27,7 @@ class GridConfigurationView(LabelFrameView):
             return None
         
         # Return seed entry if user wants to use set seed
-        return int(self.widgets["seed"].get())
+        return self.widgets["seed"].get()
     
     def set_seed_entry(self, seed):
         self.widgets["seed"].set(seed)

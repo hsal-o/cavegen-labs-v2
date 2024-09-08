@@ -1,5 +1,7 @@
 from tkinter import messagebox
 
+from exceptions.empty_field_error import EmptyFieldError
+
 
 class LabelFrameController:
     def set_settings(self, settings):
@@ -7,7 +9,7 @@ class LabelFrameController:
 
     def get_settings(self):
         if self.view.has_empty_fields():
-            messagebox.showerror("Error", "A field was left blank")
+            raise EmptyFieldError("A field was left blank")
 
         return self.view.get_settings()
             

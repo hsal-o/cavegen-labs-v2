@@ -2,11 +2,12 @@ import tkinter as tk
 from tkinter import ttk
 
 from util.constants import WIDGET_WIDTH
-from widgets.custom_base_widget import CustomBaseWidget
+from widgets.util.custom_base_widget import CustomBaseWidget
 
 class CheckboxEntry(tk.Frame, CustomBaseWidget):
-    def __init__(self, parent, label="", default=("", False)):
+    def __init__(self, parent, label="", default=("", False), command=None):
         super().__init__(parent)
+        self.command = command
 
         entry_default, checkbox_default = default
 
@@ -19,7 +20,7 @@ class CheckboxEntry(tk.Frame, CustomBaseWidget):
         self.is_checked.set(checkbox_default)
 
         # Create checkbox
-        self.checkbox = tk.Checkbutton(self, text=label, variable=self.is_checked, command=self.toggle_entry_state)
+        self.checkbox = tk.Checkbutton(self, text=label, variable=self.is_checked, command=self.on_toggle)
         self.checkbox.grid(row=0, column=0, sticky="w")
 
         # Create entry
@@ -27,24 +28,33 @@ class CheckboxEntry(tk.Frame, CustomBaseWidget):
         self.entry.grid(row=0, column=1, sticky="ew")
         self.entry.config(state="readonly")
 
-        self.entry.insert(0, entry_default)
+        # self.entry.insert(0, str(entry_default))
+        self.set(entry_default)
 
-    # Helper method
-    def toggle_entry_state(self):
-        if self.is_checked.get() == True:
-            new_state = "normal"
-        else:
-            new_state = "readonly"
+    def on_toggle(self):
+        new_state = "normal" if self.is_active() else "readonly"
         self.entry.config(state=new_state)
 
+        if self.command:
+            self.command(self.is_active())
+
     # Get entry value
+    # Returns entry value if checkbox is active, otherwise returns None
     def get(self):
-        return self.entry.get()
+        if self.is_active():
+            return self.entry.get()
+        else:
+            return None
 
     # Get checkbox value
     def is_active(self):
         return self.is_checked.get()
     
+    # Set command
+    def set_command(self, command):
+        self.command = command
+        self.on_toggle()
+ 
     # Set entry value
     def set(self, value):
         # If entry is disabled, temporily enable it
@@ -64,7 +74,8 @@ class CheckboxEntry(tk.Frame, CustomBaseWidget):
 
     # Implementing parent methods
     def is_empty(self):
-        value = self.get().strip()
+        value = str(self.get()).strip()
         return (self.is_active() and (not value))
-            
+    
+    
 

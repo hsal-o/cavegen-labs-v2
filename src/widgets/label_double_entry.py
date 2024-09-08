@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from util.constants import WIDGET_WIDTH
-from widgets.custom_base_widget import CustomBaseWidget
+from widgets.util.custom_base_widget import CustomBaseWidget
 
 class LabelDoubleEntry(tk.Frame, CustomBaseWidget):
     def __init__(self, parent, label="", default=("", "")):
@@ -29,6 +29,7 @@ class LabelDoubleEntry(tk.Frame, CustomBaseWidget):
         # Create and place the right entry
         self.entry_right = ttk.Entry(entry_container, width=0)
         self.entry_right.grid(row=0, column=1, sticky="ew")
+
         
     def get(self):
         return (self.entry_left.get(), self.entry_right.get())

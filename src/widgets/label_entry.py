@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from util.constants import WIDGET_WIDTH
-from widgets.custom_base_widget import CustomBaseWidget
+from widgets.util.custom_base_widget import CustomBaseWidget
 
 class LabelEntry(tk.Frame, CustomBaseWidget):
     def __init__(self, parent, label="", default=""):
@@ -22,7 +22,7 @@ class LabelEntry(tk.Frame, CustomBaseWidget):
         
         # Set initial value
         self.entry.insert(0, default)
-        
+
     def get(self):
         return self.entry.get()
     

@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-from widgets.custom_base_widget import CustomBaseWidget
+from widgets.util.custom_base_widget import CustomBaseWidget
 from widgets.label_double_entry import LabelDoubleEntry
 from util.constants import WIDGET_WIDTH
 from util.grid_position import GridPosition 
@@ -48,7 +48,6 @@ class PositionSelector(tk.Frame, CustomBaseWidget):
             self.show_custom_entry()
         else:
             self.hide_custom_entry()
-
 
     def show_custom_entry(self):
         self.entry_container.grid(row=1, column=1, sticky="ew")

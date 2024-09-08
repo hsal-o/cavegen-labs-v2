@@ -1,7 +1,7 @@
 import tkinter as tk
 from abc import ABC, abstractmethod
 
-from widgets.custom_base_widget import CustomBaseWidget
+from widgets.util.custom_base_widget import CustomBaseWidget
 from widgets.label_entry import LabelEntry
 
 class LabelFrameView(tk.LabelFrame, ABC):
@@ -20,7 +20,7 @@ class LabelFrameView(tk.LabelFrame, ABC):
     def build_widgets(self):
         for key, config in self.widget_configs.items():
             widget = config.build_widget(self)
-            widget.pack(fill=tk.X, padx=8, pady=4)
+            widget.apply_pack()
             self.widgets[key] = widget
 
     # SETTERS
@@ -59,13 +59,16 @@ class LabelFrameView(tk.LabelFrame, ABC):
 
             # If widget value is a tuple, convert every value to the provided typing and add to map
             if isinstance(widget_value, tuple):
-                settings[key] = tuple(widget_type(value) for value in widget_value)
+                settings[key] = tuple(widget_type(value) for value in widget_value) if widget_value is not None else (None, None)
 
             # If widget value is singular, convert value to the provided typing and add to map
             else:
-                settings[key] = widget_type(widget_value)
+                settings[key] = widget_type(widget_value) if widget_value is not None else None
 
         return settings
+    
+    def get_widget(self, widget_name):
+        return self.widgets.get(widget_name, None)
 
     def has_empty_fields(self):
         for key, widget in self.widgets.items():

@@ -4,6 +4,7 @@ from PIL import Image
 import numpy as np
 import random
 
+from exceptions.empty_field_error import EmptyFieldError
 from services.grid_configuration_service import GridConfigurationService
 from services.render_service import RenderService
 from services.algorithm_manager import AlgorithmManager
@@ -44,19 +45,24 @@ class AppController:
 
     def handle_generate_button(self):
         if(self.algo_controller == None):
-            messagebox.showerror("Error", "Select an Algorithm")
+            messagebox.showerror("Error", "Select an Algorithm before generating")
             return
         
-        # Grab configuration parameters
-        grid_config_settings = self.grid_config_service.get_settings()
+        try:
+            # Grab configuration parameters
+            grid_config_settings = self.grid_config_service.get_settings()
 
-        self.handle_seed()
+            self.handle_seed()
 
-        # Grab generated result
-        result = self.algo_controller.get_result(grid_config_settings)
+            # Grab generated result
+            result = self.algo_controller.get_result(grid_config_settings)
 
-        # Render the grid
-        self.render_service.render(result, self.algo_controller.get_algo_name())        
+            # Render the grid
+            self.render_service.render(result, self.algo_controller.get_algo_name())        
+        
+        except EmptyFieldError as e:
+            messagebox.showerror("Error", str(e))
+            return
 
     def generate_seed(self):
         return random.randint(0, 2**32 - 1)
