@@ -1,3 +1,4 @@
+from tkinter import messagebox
 from views.label_frame_view import LabelFrameView
 from widgets.widget_config import WidgetConfig
 from widgets.label_entry import LabelEntry
@@ -13,6 +14,12 @@ class GridConfigurationView(LabelFrameView):
             "height": WidgetConfig(LabelEntry, label="Height:", default=32, type=int),
             "seed": WidgetConfig(CheckboxEntry, label="Set Seed?", default=("", False), type=str)
         }
+
+    def get_width_entry(self):
+        return int(self.widgets["width"].get())
+    
+    def get_height_entry(self):
+        return int(self.widgets["height"].get())
 
     def get_seed_entry(self):
         # Return none if user wants to generate random seed

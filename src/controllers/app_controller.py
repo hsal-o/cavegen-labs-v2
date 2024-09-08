@@ -47,10 +47,10 @@ class AppController:
             messagebox.showerror("Error", "Select an Algorithm")
             return
         
-        self.handle_seed()
-
         # Grab configuration parameters
         grid_config_settings = self.grid_config_service.get_settings()
+
+        self.handle_seed()
 
         # Grab generated result
         result = self.algo_controller.get_result(grid_config_settings)

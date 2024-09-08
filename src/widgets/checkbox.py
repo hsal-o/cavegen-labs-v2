@@ -1,7 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
 
-class Checkbox(ttk.Checkbutton):
+from widgets.custom_base_widget import CustomBaseWidget
+
+class Checkbox(ttk.Checkbutton, CustomBaseWidget):
     def __init__(self, parent, label="", default=False):
         self.var = tk.BooleanVar()
         self.var.set(default)
@@ -12,3 +14,7 @@ class Checkbox(ttk.Checkbutton):
 
     def get(self):
         return self.var.get()
+    
+    # Implementing parent methods
+    def is_empty(self):
+        return False

@@ -1,6 +1,7 @@
 import tkinter as tk
 from abc import ABC, abstractmethod
 
+from widgets.custom_base_widget import CustomBaseWidget
 from widgets.label_entry import LabelEntry
 
 class LabelFrameView(tk.LabelFrame, ABC):
@@ -68,9 +69,8 @@ class LabelFrameView(tk.LabelFrame, ABC):
 
     def has_empty_fields(self):
         for key, widget in self.widgets.items():
-            if isinstance(widget, LabelEntry): 
-                value = widget.get()
-                if not value.strip():
+            if isinstance(widget, CustomBaseWidget): 
+                if(widget.is_empty()):
                     return True
         return False
     

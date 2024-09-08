@@ -1,7 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
 
-class CheckboxEntry(tk.Frame):
+from util.constants import WIDGET_WIDTH
+from widgets.custom_base_widget import CustomBaseWidget
+
+class CheckboxEntry(tk.Frame, CustomBaseWidget):
     def __init__(self, parent, label="", default=("", False)):
         super().__init__(parent)
 
@@ -20,7 +23,7 @@ class CheckboxEntry(tk.Frame):
         self.checkbox.grid(row=0, column=0, sticky="w")
 
         # Create entry
-        self.entry = ttk.Entry(self, width=12)
+        self.entry = ttk.Entry(self, width=WIDGET_WIDTH)
         self.entry.grid(row=0, column=1, sticky="ew")
         self.entry.config(state="readonly")
 
@@ -59,4 +62,9 @@ class CheckboxEntry(tk.Frame):
     def set_active(self, value):
         self.is_active.set(value)
 
+    # Implementing parent methods
+    def is_empty(self):
+        value = self.get().strip()
+        return (self.is_active() and (not value))
+            
 

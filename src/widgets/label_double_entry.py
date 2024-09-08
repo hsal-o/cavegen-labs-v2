@@ -1,37 +1,34 @@
 import tkinter as tk
 from tkinter import ttk
 
-class LabelDoubleEntry(tk.Frame):
-    def __init__(self, parent, label="", default=""):
-        super().__init__(parent)
+from util.constants import WIDGET_WIDTH
+from widgets.custom_base_widget import CustomBaseWidget
 
-        self.widget_width = 7
-        
-        # Configure grid columns to have equal weight
+class LabelDoubleEntry(tk.Frame, CustomBaseWidget):
+    def __init__(self, parent, label="", default=("", "")):
+        super().__init__(parent, background="red")
+
+        ### Configure grid columns to have equal weight
         self.grid_columnconfigure(0, weight=1, uniform="1")
         self.grid_columnconfigure(1, weight=1, uniform="1")
         
-        # Create and place the label
+        ### Create and place the label
         self.label = tk.Label(self, text=label, anchor="w", justify="left")
         self.label.grid(row=0, column=0, sticky="w")
 
-        entry_container = tk.Frame(self, background="red")
+        ### Create double entry for custom input
+        entry_container = tk.Frame(self, background="red", width=WIDGET_WIDTH)
         entry_container.grid(row=0, column=1, sticky="ew")
-        entry_container.grid_columnconfigure(0, weight=1, uniform="1")
-        entry_container.grid_columnconfigure(1, weight=1, uniform="1")
+        entry_container.grid_columnconfigure(0, weight=1)
+        entry_container.grid_columnconfigure(1, weight=1)
 
         # Create and place the left entry
-        self.entry_left = ttk.Entry(entry_container, width=self.widget_width)
+        self.entry_left = ttk.Entry(entry_container, width=0)
         self.entry_left.grid(row=0, column=0, sticky="ew")
 
         # Create and place the right entry
-        self.entry_right = ttk.Entry(entry_container, width=self.widget_width)
+        self.entry_right = ttk.Entry(entry_container, width=0)
         self.entry_right.grid(row=0, column=1, sticky="ew")
-        
-        # Set initial value
-        left_default, right_default = default
-        self.entry_left.insert(0, left_default)
-        self.entry_right.insert(0, right_default)
         
     def get(self):
         return (self.entry_left.get(), self.entry_right.get())
@@ -45,3 +42,6 @@ class LabelDoubleEntry(tk.Frame):
         self.entry_right.delete(0, tk.END)
         self.entry_right.insert(0, right_value)
       
+    # Implementing parent methods
+    def is_empty(self):
+        return not (self.entry_left.get().strip() and self.entry_right.get().strip())

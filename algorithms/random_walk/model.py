@@ -1,7 +1,6 @@
 import random
 from math import ceil, floor
 from algorithms.base_classes.base_model import BaseModel
-from util.constants import StartPosition
 
 class RandomWalkModel(BaseModel):
     def generate(self, grid_config_settings, algo_config_settings):
@@ -10,7 +9,8 @@ class RandomWalkModel(BaseModel):
         self.grid = [[1 for _ in range(self.width)] for _ in range(self.height)]
 
         for _ in range(algo_config_settings["walker_count"]):
-            start_x, start_y = StartPosition.determine(self.width, self.height, algo_config_settings["start_position"])
+            # start_x, start_y = StartPosition.determine(self.width, self.height, algo_config_settings["start_position"])
+            start_x, start_y = algo_config_settings["start_position"]
             self.generate_steps(algo_config_settings["step_count"], algo_config_settings["thickness"], start_x, start_y)
 
         return self.grid
