@@ -70,7 +70,7 @@ class PositionSelector(tk.Frame, CustomBaseWidget):
         position = GridPosition(selection)
 
         if(position == GridPosition.CUSTOM):
-            return self.entry_left.get(), self.entry_right.get()
+            return GridPosition.determine(position, x=int(self.entry_left.get()), y=int(self.entry_right.get()))
         else:
             return GridPosition.determine(position)
 

@@ -17,13 +17,10 @@ class GridPosition(Enum):
     BOTTOM_RIGHT =  10
 
     @staticmethod
-    def determine(position):
+    def determine(position, x=1, y=1):
         grid_configuration_service = GridConfigurationService()
         width = grid_configuration_service.get_width_entry()
         height = grid_configuration_service.get_height_entry()
-
-        x = None
-        y = None
 
         match position:
             # Top 
@@ -63,5 +60,11 @@ class GridPosition(Enum):
             case GridPosition.RANDOM:
                 x = random.randint(1, width)
                 y = random.randint(1, height)
+
+            # Custom
+            case GridPosition.CUSTOM:
+                # Clamp provided positions to fit in grid
+                x = max(1, min(x, width))
+                y = max(1, min(y, height))
         
         return x, y
