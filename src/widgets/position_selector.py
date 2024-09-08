@@ -7,8 +7,9 @@ from util.constants import WIDGET_WIDTH
 from util.grid_position import GridPosition 
 
 class PositionSelector(tk.Frame, CustomBaseWidget):
-    def __init__(self, parent, label="", default=GridPosition.CENTER):
+    def __init__(self, parent, label="", default=GridPosition.CENTER, tooltip=None):
         super().__init__(parent)
+        CustomBaseWidget.__init__(self, tooltip)
 
         # Configure grid columns to have equal weight
         self.grid_columnconfigure(0, weight=1, uniform="1")

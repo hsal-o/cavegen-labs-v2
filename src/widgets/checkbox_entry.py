@@ -5,8 +5,9 @@ from util.constants import WIDGET_WIDTH
 from widgets.util.custom_base_widget import CustomBaseWidget
 
 class CheckboxEntry(tk.Frame, CustomBaseWidget):
-    def __init__(self, parent, label="", default=("", False), command=None):
+    def __init__(self, parent, label="", default=("", False), tooltip=None, command=None):
         super().__init__(parent)
+        CustomBaseWidget.__init__(self, tooltip)
         self.command = command
 
         entry_default, checkbox_default = default

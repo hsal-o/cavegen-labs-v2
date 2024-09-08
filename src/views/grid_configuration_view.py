@@ -10,9 +10,21 @@ class GridConfigurationView(LabelFrameView):
 
     def create_widgets(self):
         self.widget_configs = {
-            "width": WidgetConfig(LabelEntry, label="Width:", default=32, type=int),
-            "height": WidgetConfig(LabelEntry, label="Height:", default=32, type=int),
-            "seed": WidgetConfig(CheckboxEntry, label="Set Seed?", default=("", False), type=int)
+            "width": WidgetConfig(LabelEntry, 
+                                  label="Width:", 
+                                  default=32, 
+                                  type=int, 
+                                  tooltip="Width of the generated grid"),
+            "height": WidgetConfig(LabelEntry, 
+                                   label="Height:", 
+                                   default=32, type=int, 
+                                   tooltip="Height of the generated grid"),
+            "seed": WidgetConfig(CheckboxEntry, 
+                                 label="Set Seed?", 
+                                 default=("", False), 
+                                 type=int, 
+                                 tooltip=("Enable or disable the use of a specific seed for random number generation. "
+                                          "If enabled, enter the seed value; if disabled, random seeds will be used"))
         }
 
     def get_width_entry(self):

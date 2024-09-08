@@ -13,12 +13,17 @@ class RandomWalkView(BaseView):
 
     def create_widgets(self):
         self.widget_configs = {
-            "walker_count": WidgetConfig(LabelEntry, label="Walker Count:", default=1, type=int),
-            "step_count": WidgetConfig(LabelEntry, label="Step Count:", default=100, type=int),
-            "thickness": WidgetConfig(LabelEntry, label="Thickness:", default=1, type=int),
-            "bias": WidgetConfig(CheckboxEntry, label="Set Bias?", default=(0.05, False), type=float),
-            "start_position": WidgetConfig(PositionSelector, label="Start Position:", default=GridPosition.CENTER, type=int),
-            "end_position": WidgetConfig(PositionSelector, label="End Position:", default=GridPosition.CENTER, type=int),
+            "walker_count": WidgetConfig(LabelEntry, label="Walker Count:", default=1, type=int, tooltip="The number of walkers to use"),
+
+            "step_count": WidgetConfig(LabelEntry, label="Step Count:", default=100, type=int, tooltip="The number of steps each walker will take"),
+
+            "thickness": WidgetConfig(LabelEntry, label="Thickness:", default=1, type=int, tooltip="The thickness of the path drawn by the walkers"),
+
+            "bias": WidgetConfig(CheckboxEntry, label="Set Bias?", default=(0.05, False), type=float, tooltip="Enable or disable bias in the walker movement. If enabled, adjust the bias % value"),
+
+            "start_position": WidgetConfig(PositionSelector, label="Start Position:", default=GridPosition.CENTER, type=int, tooltip="The starting position for the walkers in the grid"),
+            
+            "end_position": WidgetConfig(PositionSelector, label="End Position:", default=GridPosition.CENTER, type=int, tooltip="The bias ending position for the walkers in the grid"),
         }
 
     

@@ -5,6 +5,7 @@ from algorithms import algorithms
 from views.algo_configuration_view import AlgoConfigurationView
 from views.grid_configuration_view import GridConfigurationView
 from views.render_view import RenderView
+import util.config
 
 class AppView(tk.Tk):
     def __init__(self, controller=None):
@@ -58,6 +59,8 @@ class AppView(tk.Tk):
         # Help menu
         help_menu = tk.Menu(menubar, tearoff=0)
         menubar.add_cascade(label="Help", menu=help_menu)
+        self.add_tooltip_toggle(help_menu)
+        help_menu.add_separator()
         help_menu.add_command(label="User Guide")
         help_menu.add_command(label="About")
 
@@ -107,5 +110,14 @@ class AppView(tk.Tk):
     def set_algorithm_view(self, algo_view):
         self.algo_configuration_container.set_view(algo_view)
     
+    # Helper methods
+    def add_tooltip_toggle(self, menu):
+        self.show_tooltips_var = tk.BooleanVar(value=util.config.USE_TOOLTIP)
+        menu.add_checkbutton(
+            label="Show Tooltips",
+            variable=self.show_tooltips_var,
+            command=self.toggle_tooltips
+        )
 
-   
+    def toggle_tooltips(self):
+        util.config.USE_TOOLTIP = self.show_tooltips_var.get()
