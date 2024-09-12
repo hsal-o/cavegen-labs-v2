@@ -9,7 +9,7 @@ class CustomBaseWidget(ABC):
             CreateToolTip(self, tooltip)
 
     def apply_pack(self, *args, **kwargs):
-        self.pack(fill=tk.X, padx=8, pady=4)
+        self.pack(fill=tk.X, padx=8, pady=2)
 
     def show(self):
         self.apply_pack()

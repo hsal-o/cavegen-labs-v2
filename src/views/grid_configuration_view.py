@@ -1,3 +1,4 @@
+import string
 from tkinter import messagebox
 from views.label_frame_view import LabelFrameView
 from widgets.util.widget_config import WidgetConfig
@@ -39,7 +40,7 @@ class GridConfigurationView(LabelFrameView):
             return None
         
         # Return seed entry if user wants to use set seed
-        return self.widgets["seed"].get()
+        return int(self.widgets["seed"].get())
     
     def set_seed_entry(self, seed):
         self.widgets["seed"].set(seed)

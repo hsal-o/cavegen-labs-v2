@@ -31,7 +31,7 @@ class AppController:
         new_view.title(self.view.title())
         new_view.mainloop()
 
-    def handle_menu_open_command(self):
+    def handle_menu_open_command(self): 
         pass
 
     def handle_menu_save_command(self):

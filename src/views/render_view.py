@@ -6,8 +6,8 @@ class RenderView(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent, width=400, height=400, background="white", relief=tk.SUNKEN, borderwidth=1)
         # self.pack(side=tk.LEFT)
-        self.pack_propagate(False)
-
+        # self.pack_propagate(False)
+        
         self.canvas = None
 
     def destroy_prev_canvas(self):

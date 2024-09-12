@@ -22,49 +22,58 @@ class GridPosition(Enum):
         width = grid_configuration_service.get_width_entry()
         height = grid_configuration_service.get_height_entry()
 
+        # min_width = 1
+        # max_width = width
+        # min_height = 1
+        # max_height = height
+        min_width = 0
+        min_height = 0
+        max_width = width-1
+        max_height = height-1
+        
         match position:
             # Top 
             case GridPosition.TOP_LEFT:
-                x = 1
-                y = 1
+                x = min_width
+                y = min_height
             case GridPosition.TOP_CENTER:
                 x = round(width / 2)
-                y = 1
+                y = min_height
             case GridPosition.TOP_RIGHT:
-                x = width
-                y = 1
+                x = max_width
+                y = min_height
 
             # Center
             case GridPosition.CENTER_LEFT:
-                x = 1
+                x = min_width
                 y = round(height / 2)
             case GridPosition.CENTER:
                 x = round(width / 2)
                 y = round(height / 2)
             case GridPosition.CENTER_RIGHT:
-                x = width
+                x = max_width
                 y = round(height / 2)
 
             # Bottom
             case GridPosition.BOTTOM_LEFT:
-                x = 1
-                y = height
+                x = min_width
+                y = max_height
             case GridPosition.BOTTOM_CENTER:
                 x = round(width / 2)
-                y = height
+                y = max_height
             case GridPosition.BOTTOM_RIGHT:
-                x = width
-                y = height
+                x = max_width
+                y = max_height
 
             # Random
             case GridPosition.RANDOM:
-                x = random.randint(1, width)
-                y = random.randint(1, height)
+                x = random.randint(min_width, max_width)
+                y = random.randint(min_height, max_height)
 
             # Custom
             case GridPosition.CUSTOM:
                 # Clamp provided positions to fit in grid
-                x = max(1, min(x, width))
-                y = max(1, min(y, height))
+                x = max(min_width, min(x, max_width))
+                y = max(min_height, min(y, max_height))
         
         return x, y

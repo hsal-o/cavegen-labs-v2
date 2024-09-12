@@ -13,7 +13,7 @@ class CheckboxEntry(tk.Frame, CustomBaseWidget):
         entry_default, checkbox_default = default
 
         # Configure grid columns to have equal weight
-        self.grid_columnconfigure(0, weight=1, uniform="1")
+        self.grid_columnconfigure(0, weight=2, uniform="1")
         self.grid_columnconfigure(1, weight=1, uniform="1")
 
         # Create control variable
@@ -25,7 +25,8 @@ class CheckboxEntry(tk.Frame, CustomBaseWidget):
         self.checkbox.grid(row=0, column=0, sticky="w")
 
         # Create entry
-        self.entry = ttk.Entry(self, width=WIDGET_WIDTH)
+        # self.entry = ttk.Entry(self, width=WIDGET_WIDTH)
+        self.entry = ttk.Entry(self, width=0)
         self.entry.grid(row=0, column=1, sticky="ew")
         self.entry.config(state="readonly")
 

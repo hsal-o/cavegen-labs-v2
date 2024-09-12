@@ -6,7 +6,7 @@ from widgets.util.custom_base_widget import CustomBaseWidget
 
 class LabelDoubleEntry(tk.Frame, CustomBaseWidget):
     def __init__(self, parent, label="", default=("", ""), tooltip=None):
-        super().__init__(parent, background="red")
+        super().__init__(parent)
         CustomBaseWidget.__init__(self, tooltip)
 
         ### Configure grid columns to have equal weight
@@ -18,7 +18,7 @@ class LabelDoubleEntry(tk.Frame, CustomBaseWidget):
         self.label.grid(row=0, column=0, sticky="w")
 
         ### Create double entry for custom input
-        entry_container = tk.Frame(self, background="red", width=WIDGET_WIDTH)
+        entry_container = tk.Frame(self, width=WIDGET_WIDTH)
         entry_container.grid(row=0, column=1, sticky="ew")
         entry_container.grid_columnconfigure(0, weight=1)
         entry_container.grid_columnconfigure(1, weight=1)
@@ -30,6 +30,8 @@ class LabelDoubleEntry(tk.Frame, CustomBaseWidget):
         # Create and place the right entry
         self.entry_right = ttk.Entry(entry_container, width=0)
         self.entry_right.grid(row=0, column=1, sticky="ew")
+
+        self.set(default)
 
         
     def get(self):
