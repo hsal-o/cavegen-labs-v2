@@ -1,7 +1,4 @@
-import string
-from tkinter import messagebox
 from views.label_frame_view import LabelFrameView
-from widgets.util.widget_config import WidgetConfig
 from widgets.label_entry import LabelEntry
 from widgets.checkbox_entry import CheckboxEntry
 
@@ -10,21 +7,24 @@ class GridConfigurationView(LabelFrameView):
         super().__init__(parent, "Grid Configuration")
 
     def create_widgets(self):
-        self.widget_configs = {
-            "width": WidgetConfig(LabelEntry, 
-                                  label="Width:", 
-                                  default=32, 
-                                  type=int, 
-                                  tooltip="Width of the generated grid"),
-            "height": WidgetConfig(LabelEntry, 
-                                   label="Height:", 
-                                   default=32, type=int, 
-                                   tooltip="Height of the generated grid"),
-            "seed": WidgetConfig(CheckboxEntry, 
-                                 label="Set Seed?", 
-                                 default=("", False), 
+        self.widgets = {
+            "width": LabelEntry(parent=self, 
+                                type=int, 
+                                label="Width:", 
+                                default=32, 
+                                tooltip="Width of the generated grid"),
+
+            "height": LabelEntry(parent=self,
                                  type=int, 
-                                 tooltip=("Enable or disable the use of a specific seed for random number generation. "
+                                 label="Height:", 
+                                 default=32,  
+                                 tooltip="Height of the generated grid"),
+                                 
+            "seed": CheckboxEntry(parent=self, 
+                                  type=int,
+                                  label="Set Seed?", 
+                                  default=("", False), 
+                                  tooltip=("Enable or disable the use of a specific seed for random number generation. "
                                           "If enabled, enter the seed value; if disabled, random seeds will be used"))
         }
 

@@ -7,9 +7,9 @@ from util.constants import WIDGET_WIDTH
 from util.grid_position import GridPosition 
 
 class PositionSelector(tk.Frame, CustomBaseWidget):
-    def __init__(self, parent, label="", default=GridPosition.CENTER, tooltip=None):
+    def __init__(self, parent=None, type=None, label="", default=GridPosition.CENTER, tooltip=None):
         super().__init__(parent)
-        CustomBaseWidget.__init__(self, tooltip)
+        CustomBaseWidget.__init__(self, type, tooltip)
 
         # Configure grid columns to have equal weight
         self.grid_columnconfigure(0, weight=1, uniform="1")
@@ -65,20 +65,25 @@ class PositionSelector(tk.Frame, CustomBaseWidget):
         else:
             self.hide_custom_entry()
 
-    def get(self):
+    ########################################
+    # Abstract Method Implementations
+    ######################################## 
+    def _get_value(self):
         selection = self.combobox.current()
         position = GridPosition(selection)
 
-        if(position == GridPosition.CUSTOM):
-            return GridPosition.determine(position, x=int(self.entry_left.get()), y=int(self.entry_right.get()))
-        else:
-            return GridPosition.determine(position)
+        try:
+            if(position == GridPosition.CUSTOM):
+                return GridPosition.determine(position, x=int(self.entry_left.get()), y=int(self.entry_right.get()))
+            else:
+                return GridPosition.determine(position)
+        except:
+            return None
 
     def set(self, value):
         self.combobox.set(value.value)
 
-    # Implementing parent methods
-    def is_empty(self):
-        selection = self.combobox.current()
-        position = GridPosition(selection)
-        return (position == GridPosition.CUSTOM and not (self.entry_left.get().strip() and self.entry_right.get().strip()))
+    # def is_empty(self):
+    #     selection = self.combobox.current()
+    #     position = GridPosition(selection)
+    #     return (position == GridPosition.CUSTOM and not (self.entry_left.get().strip() and self.entry_right.get().strip()))

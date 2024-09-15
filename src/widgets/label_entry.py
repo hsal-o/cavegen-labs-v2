@@ -6,9 +6,9 @@ from util.create_tool_tip import CreateToolTip
 from widgets.util.custom_base_widget import CustomBaseWidget
 
 class LabelEntry(tk.Frame, CustomBaseWidget):
-    def __init__(self, parent, label="", default="", tooltip=None):
+    def __init__(self, parent=None, type=None, label="", default="", tooltip=None):
         super().__init__(parent)
-        CustomBaseWidget.__init__(self, tooltip)
+        CustomBaseWidget.__init__(self, type, tooltip)
         
         # Configure grid columns to have equal weight
         self.grid_columnconfigure(0, weight=1, uniform="1")
@@ -25,13 +25,12 @@ class LabelEntry(tk.Frame, CustomBaseWidget):
         # Set initial value
         self.entry.insert(0, default)
 
-    def get(self):
+    ########################################
+    # Abstract Method Implementations
+    ######################################## 
+    def _get_value(self):
         return self.entry.get()
     
     def set(self, value):
         self.entry.delete(0, tk.END)
         self.entry.insert(0, value)
-
-    # Implementing parent methods
-    def is_empty(self):
-        return not (self.get().strip())

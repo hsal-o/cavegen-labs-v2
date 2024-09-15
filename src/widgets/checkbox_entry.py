@@ -5,9 +5,9 @@ from util.constants import WIDGET_WIDTH
 from widgets.util.custom_base_widget import CustomBaseWidget
 
 class CheckboxEntry(tk.Frame, CustomBaseWidget):
-    def __init__(self, parent, label="", default=("", False), tooltip=None, command=None):
+    def __init__(self, parent=None, type=None, label="", default=("", False), tooltip=None, command=None):
         super().__init__(parent)
-        CustomBaseWidget.__init__(self, tooltip)
+        CustomBaseWidget.__init__(self, type, tooltip)
         self.command = command
 
         entry_default, checkbox_default = default
@@ -40,14 +40,6 @@ class CheckboxEntry(tk.Frame, CustomBaseWidget):
         if self.command:
             self.command(self.is_active())
 
-    # Get entry value
-    # Returns entry value if checkbox is active, otherwise returns None
-    def get(self):
-        if self.is_active():
-            return self.entry.get()
-        else:
-            return None
-
     # Get checkbox value
     def is_active(self):
         return self.is_checked.get()
@@ -56,7 +48,19 @@ class CheckboxEntry(tk.Frame, CustomBaseWidget):
     def set_command(self, command):
         self.command = command
         self.on_toggle()
- 
+
+    # Set checkbox value
+    def set_active(self, value):
+        self.is_active.set(value)
+
+    ########################################
+    # Abstract Method Implementations
+    ######################################## 
+    # Get entry value
+    # Returns entry value if checkbox is active, otherwise returns None
+    def _get_value(self):
+        return self.entry.get() if self.is_active() else None
+        
     # Set entry value
     def set(self, value):
         # If entry is disabled, temporily enable it
@@ -70,13 +74,12 @@ class CheckboxEntry(tk.Frame, CustomBaseWidget):
         if(not self.is_active()):
              self.entry.config(state="readonly")
 
-    # Set checkbox value
-    def set_active(self, value):
-        self.is_active.set(value)
-
-    # Implementing parent methods
+    ########################################
+    # Method Overrides
+    ########################################        
     def is_empty(self):
-        value = str(self.get()).strip()
+        raw_value = self.get()
+        value = str(raw_value).strip() if raw_value is not None else ''
         return (self.is_active() and (not value))
     
     

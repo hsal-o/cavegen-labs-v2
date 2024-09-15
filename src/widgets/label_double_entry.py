@@ -5,9 +5,9 @@ from util.constants import WIDGET_WIDTH
 from widgets.util.custom_base_widget import CustomBaseWidget
 
 class LabelDoubleEntry(tk.Frame, CustomBaseWidget):
-    def __init__(self, parent, label="", default=("", ""), tooltip=None):
+    def __init__(self, parent=None, type=None, label="", default=("", ""), tooltip=None):
         super().__init__(parent)
-        CustomBaseWidget.__init__(self, tooltip)
+        CustomBaseWidget.__init__(self, type, tooltip)
 
         ### Configure grid columns to have equal weight
         self.grid_columnconfigure(0, weight=1, uniform="1")
@@ -32,10 +32,13 @@ class LabelDoubleEntry(tk.Frame, CustomBaseWidget):
         self.entry_right.grid(row=0, column=1, sticky="ew")
 
         self.set(default)
-
-        
-    def get(self):
+      
+    ########################################
+    # Abstract Method Implementations
+    ######################################## 
+    def _get_value(self):
         return (self.entry_left.get(), self.entry_right.get())
+        # return (self.type(self.entry_left.get()), self.type(self.entry_right.get()))
     
     def set(self, value):
         left_value, right_value = value
@@ -45,7 +48,3 @@ class LabelDoubleEntry(tk.Frame, CustomBaseWidget):
 
         self.entry_right.delete(0, tk.END)
         self.entry_right.insert(0, right_value)
-      
-    # Implementing parent methods
-    def is_empty(self):
-        return not (self.entry_left.get().strip() and self.entry_right.get().strip())

@@ -11,7 +11,7 @@ class RandomWalkModel(BaseModel):
         for _ in range(algo_config_settings["walker_count"]):
             start_x, start_y = algo_config_settings["start_position"]
             bias = algo_config_settings["bias"]
-            end_x, end_y = algo_config_settings["end_position"]
+            end_x, end_y = algo_config_settings["end_position"] if bias else (None, None)
             self.generate_steps(algo_config_settings["step_count"], bias, algo_config_settings["thickness"], start_x, start_y, end_x, end_y)
 
         return self.grid
@@ -36,15 +36,14 @@ class RandomWalkModel(BaseModel):
         for _ in range(steps - 1):
             prev_x = curr_x
             prev_y = curr_y
-
-            # Calculate the difference between current position and end position
-            dx = end_x - curr_x
-            dy = end_y - curr_y
-
             possible_directions = [0, 1, 2, 3]
 
             if bias:
                 bias = max(0, min(bias, 1))
+                
+                # Calculate the difference between current position and end position
+                dx = end_x - curr_x
+                dy = end_y - curr_y
 
                 biased_directions = []
                 if dy < 0:  # North
