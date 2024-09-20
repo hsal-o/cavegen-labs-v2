@@ -8,8 +8,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from algorithms import algorithms
 
 class AlgorithmManager:
-    def __init__(self, parent):
-        self.parent = parent
+    def __init__(self, parent_view):
+        self.parent_view = parent_view
         self.cached_models = {}
         self.cached_views = {}
         self.cached_controllers = {}
@@ -19,7 +19,7 @@ class AlgorithmManager:
 
 
     # Method to return a cached algorithm view and controller
-    def load_algorithm(self, algo_name):
+    def load_algorithm(self, parent_controller, algo_name):
         if algo_name not in self.cached_models:
             self.preload_algorithm(algo_name)
 
@@ -28,9 +28,10 @@ class AlgorithmManager:
         controller_class = self.cached_controllers[algo_name]
 
         algo_model = model_class()
-        algo_view = view_class(self.parent)
+        algo_view = view_class(self.parent_view)
         algo_controller = controller_class(algo_model, algo_view, algo_name)
         algo_view.set_controller(algo_controller)
+        algo_controller.set_parent_controller(parent_controller)
 
         return algo_view, algo_controller
     

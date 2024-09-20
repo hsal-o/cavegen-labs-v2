@@ -50,7 +50,7 @@ class AppController:
         
         try:
             # Grab configuration parameters
-            grid_config_settings = self.grid_config_service.get_settings()
+            grid_config_settings = self.get_grid_config_settings()
 
             self.handle_seed()
 
@@ -58,11 +58,17 @@ class AppController:
             result = self.algo_controller.get_result(grid_config_settings)
 
             # Render the grid
-            self.render_service.render(result, self.algo_controller.get_algo_name())        
+            self.render_result(result, self.algo_controller.get_algo_name())        
         
         except EmptyFieldError as e:
             messagebox.showerror("Error", str(e))
             return
+        
+    def get_grid_config_settings(self):
+        return self.grid_config_service.get_settings()
+
+    def render_result(self, result, algorithm_name):
+        self.render_service.render(result, algorithm_name)  
 
     def generate_seed(self):
         return random.randint(0, 2**32 - 1)
@@ -73,5 +79,5 @@ class AppController:
         self.grid_config_service.set_seed_entry(seed)
 
     def load_algorithm(self, algo_name):
-        algo_view, self.algo_controller = self.algo_manager.load_algorithm(algo_name)
+        algo_view, self.algo_controller = self.algo_manager.load_algorithm(self, algo_name)
         self.view.set_algorithm_view(algo_view)

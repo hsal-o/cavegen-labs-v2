@@ -2,6 +2,7 @@ from controllers.label_frame_controller import LabelFrameController
 
 class BaseController(LabelFrameController):
     def __init__(self, model, view, algo_name):
+        self.parent_controller = None
         self.model = model
         self.view = view
         self.algo_name = " ".join(word.capitalize() for word in algo_name.split("_"))
@@ -17,3 +18,6 @@ class BaseController(LabelFrameController):
         grid = self.model.generate(grid_config_settings, algo_config_settings)
         
         return grid
+    
+    def set_parent_controller(self, parent_controller):
+        self.parent_controller = parent_controller

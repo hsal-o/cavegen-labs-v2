@@ -17,36 +17,10 @@ class LabelFrameView(tk.LabelFrame, ABC):
     def set_controller(self, controller):
         self.controller = controller
 
-    # def build_widgets(self):
-    #     for key, config in self.widget_configs.items():
-    #         widget = config.build_widget(self)
-    #         widget.apply_pack()
-    #         self.widgets[key] = widget
-
     def build_widgets(self):
         for key, widget in self.widgets.items():
             widget.apply_pack()
             self.widgets[key] = widget
-
-    # SETTERS
-    # def set_settings(self, settings):
-    #     # Iterate through the provided widget map
-    #     for key, value in settings.items():
-
-    #         # Grab widget's typing with associated key
-    #         widget_type = self.widget_configs[key].get_type()
-
-    #         # Grab widget with associated key
-    #         widget = self.widgets[key]
-
-    #         # If widget value is a tuple, convert every value to the provided typing and assign it to widget
-    #         if isinstance(value, tuple):
-    #             converted_value = tuple(widget_type(v) for v in value)
-    #             widget.set(converted_value)
-
-    #         # If widget value is singular, convert value to the provided typing and assign it to widget
-    #         else:
-    #             widget.set(widget_type(value))
 
     def set_settings(self, settings):
         # Iterate through the provided widget map
@@ -67,37 +41,14 @@ class LabelFrameView(tk.LabelFrame, ABC):
             else:
                 widget.set(widget_type(value))
 
-    # GETTERS
-    # def get_settings(self):
-    #     # Initialize empty map
-    #     settings = {}
-
-    #     # Iterate through widgets
-    #     for key, widget in self.widgets.items():
-
-    #         # Grab widget's typing from its configuration (Int, String, etc.)
-    #         widget_type = self.widget_configs[key].get_type()
-
-    #         # Grab widget value
-    #         widget_value = widget.get()
-
-    #         # If widget value is a tuple, convert every value to the provided typing and add to map
-    #         if isinstance(widget_value, tuple):
-    #             settings[key] = tuple(widget_type(value) for value in widget_value) if widget_value is not None else (None, None)
-
-    #         # If widget value is singular, convert value to the provided typing and add to map
-    #         else:
-    #             settings[key] = widget_type(widget_value) if widget_value is not None else None
-
-    #     return settings
-
     def get_settings(self):
         # Initialize empty map
         settings = {}
 
         # Iterate through widgets
         for key, widget in self.widgets.items():
-            settings[key] = widget.get()
+            if widget.get_type() is not None:
+                settings[key] = widget.get()
 
         return settings
 

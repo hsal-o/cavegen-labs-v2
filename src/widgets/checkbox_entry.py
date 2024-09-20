@@ -77,7 +77,7 @@ class CheckboxEntry(tk.Frame, CustomBaseWidget):
     ########################################
     # Method Overrides
     ########################################        
-    def is_empty(self):
+    def _evaluate_empty(self):
         raw_value = self.get()
         value = str(raw_value).strip() if raw_value is not None else ''
         return (self.is_active() and (not value))

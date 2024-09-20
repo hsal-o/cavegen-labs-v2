@@ -14,6 +14,8 @@ class CustomBaseWidget(ABC):
     def apply_pack(self, *args, **kwargs):
         self.pack(fill=tk.X, padx=8, pady=2)
 
+    # Add Enable/Disable method for interactable widgets?
+
     """Show the widget"""
     def show(self):
         self.apply_pack()
@@ -65,6 +67,9 @@ class CustomBaseWidget(ABC):
         except (ValueError, TypeError) as e:
             raise ValueError(f"Invalid input for type {self.type.__name__}: {e}")
 
+    ########################################
+    # Overridable Methods
+    ######################################## 
     """Internal method to check if a widget was left empty/unsanswered
         - Can be overriden for widgets with more complex logic"""
     def _evaluate_empty(self):
@@ -73,6 +78,9 @@ class CustomBaseWidget(ABC):
             return any(v is None for v in value)
         return value is None
     
+    ########################################
+    # Abstract Methods
+    ######################################## 
     """Internal Abstract method for widgets to implement how the value will be extracted"""
     @abstractmethod
     def _get_value(self):

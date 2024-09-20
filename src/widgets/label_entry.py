@@ -15,7 +15,7 @@ class LabelEntry(tk.Frame, CustomBaseWidget):
         self.grid_columnconfigure(1, weight=1, uniform="1")
         
         # Create and place the label
-        self.label = tk.Label(self, text=label, wraplength=WIDGET_WIDTH*7, anchor="w", justify="left")
+        self.label = tk.Label(self, text=label, wraplength=WIDGET_WIDTH*6, anchor="w", justify="left")
         self.label.grid(row=0, column=0, sticky="w")
         
         # Create and place the entry
