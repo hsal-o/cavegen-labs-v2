@@ -4,15 +4,24 @@ import random
 from algorithms.base_classes.base_model import BaseModel
 
 class CellularAutomataModel(BaseModel):
-    def generate(self, grid_config_settings, algo_config_settings):
+    def generate(self, grid_config_settings, algo_config_settings, grid=None):
         self.width = grid_config_settings["width"]
         self.height = grid_config_settings["height"]
-        self.grid = self.generate_initial_grid(algo_config_settings["nonsolid_odds"])
 
-        for _ in range(0, algo_config_settings["iterations"]):
-            self.generate_iteration(algo_config_settings["solidify_thresh_solid"], algo_config_settings["solidify_thresh_nonsolid"])
+        # If grid is provided, use it; otherwise, generate a new one
+        if grid is None:
+            self.grid = self.generate_initial_grid(algo_config_settings["nonsolid_odds"])
+        else:
+            self.grid = grid
+
+        # Apply iterations to the grid
+        self.apply_iterations(algo_config_settings)
 
         return self.grid
+    
+    def apply_iterations(self, algo_config_settings):
+        for _ in range(algo_config_settings["iterations"]):
+            self.generate_iteration(algo_config_settings["solidify_thresh_solid"], algo_config_settings["solidify_thresh_nonsolid"], algo_config_settings.get("border_margin"))
     
     def generate_initial_grid(self, nonsolid_odds):
         grid = [[0 for _ in range(self.width)] for _ in range(self.height)]
@@ -29,12 +38,6 @@ class CellularAutomataModel(BaseModel):
                 grid[y][x] = 0 if chance <= nonsolid_odds else 1
         return grid
 
-    def generate_single_step(self, grid_config_settings, algo_config_settings):
-        width = grid_config_settings["width"]
-        height = grid_config_settings["height"]
-        grid = [[0 if x == y else 1 for x in range(width)] for y in range(height)]
-        return grid
-    
     def count_solid_neighbors(self, y, x):
         count = 0
         for dy in range(-1, 2):
@@ -55,8 +58,8 @@ class CellularAutomataModel(BaseModel):
 
         return count
     
-    def generate_iteration(self, num_to_turn_solid, num_to_turn_nonsolid):
-        new_grid = [[None for _ in range(self.width)] for _ in range(self.height)]
+    def generate_iteration(self, num_to_turn_solid, num_to_turn_nonsolid, border_margin=None):
+        new_grid = [[self.grid[y][x] for x in range(self.width)] for y in range(self.height)]
 
         for y in range(0, self.height):
             for x in range(0, self.width):
@@ -64,6 +67,11 @@ class CellularAutomataModel(BaseModel):
                 if(y == 0 or x == 0 or y == self.height-1 or x == self.width-1):
                     new_grid[y][x] = 1 # Turn solid automatically
                     continue
+
+                # If border ring margin is provided, skip the inside cells
+                if border_margin is not None:
+                     if(y >= border_margin and y <= self.height-border_margin and x >= border_margin and x <= self.width-border_margin):
+                        continue
                 
                 num_solid_neighbors = self.count_solid_neighbors(y, x)
 

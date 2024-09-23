@@ -53,6 +53,10 @@ class CheckboxEntry(tk.Frame, CustomBaseWidget):
     def set_active(self, value):
         self.is_active.set(value)
 
+    # Method to grab entry value by force, regardless if active
+    def _get_value_forced(self):
+        return self.entry.get()
+
     ########################################
     # Abstract Method Implementations
     ######################################## 

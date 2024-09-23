@@ -25,8 +25,8 @@ class GridConfigurationService(LabelFrameController):
     def get_height_entry(self):
         return self.view.get_height_entry()
 
-    def get_seed_entry(self):
-        return self.view.get_seed_entry()
+    def get_seed_entry(self, force=False):
+        return self.view.get_seed_entry(force)
     
     def set_seed_entry(self, seed):
         self.view.set_seed_entry(seed)

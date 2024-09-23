@@ -34,7 +34,10 @@ class GridConfigurationView(LabelFrameView):
     def get_height_entry(self):
         return int(self.widgets["height"].get())
 
-    def get_seed_entry(self):
+    def get_seed_entry(self, force=False):
+        if force:
+            return int(self.widgets["seed"]._get_value_forced())
+
         # Return none if user wants to generate random seed
         if(not self.widgets["seed"].is_active()):
             return None

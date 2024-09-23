@@ -45,5 +45,5 @@ class MidpointDisplacementView(BaseView):
                                                type=int, 
                                                label="ΔThickness (+/-):", 
                                                default=(0,0), 
-                                               tooltip=""),
+                                               tooltip="Adjust the variation in thickness. Positive and negative values will increase or decrease the width range"),
         }
